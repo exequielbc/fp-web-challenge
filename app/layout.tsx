@@ -1,6 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { type ReactNode } from "react";
+import { Container, ScrollArea, Theme, ThemePanel } from "@radix-ui/themes";
+import { ToastProvider, ToastViewport } from "@radix-ui/react-toast";
+import { ThemeProvider } from "next-themes";
+import styles from "./layout.module.css";
+import "@radix-ui/themes/styles.css";
 
 export const metadata: Metadata = {
   title: "FP facilities check in",
@@ -21,7 +26,25 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ThemeProvider attribute="class">
+          <Theme accentColor="blue">
+            <ToastProvider>
+              <Container p="2">
+                {/* <NavigationBar mb="2" /> */}
+                <ScrollArea scrollbars="vertical">{children}</ScrollArea>
+              </Container>
+              <Container className={styles.toastViewport} p="4">
+                <ToastViewport />
+              </Container>
+            </ToastProvider>
+
+            {process.env.NODE_ENV === "development" && (
+              <ThemePanel defaultOpen={false} />
+            )}
+          </Theme>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
