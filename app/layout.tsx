@@ -25,7 +25,7 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider attribute="class">
           <Theme accentColor="blue">
