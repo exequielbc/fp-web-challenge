@@ -6,11 +6,10 @@
 # Functional requirements
 
 - Y [Required] FE User can scan QR code using their mobile
-- [Required] BE Record that user checked in
-- [Required] BE validate that user has access to facility
-- [Required] FE Display feedback to user that they have been given access.
+- Maybe? (takes to confirmation screen, no DB record) [Required] BE Record that user checked in
+- Y [Required] FE Display feedback to user that they have been given access.
   - [Backlog]: Confirmation screen could show unique code for staff to double check (given by server, could or could not allow staff to know who the authorized user is)
-  - [UX-Improvement]: Confirmation screen can show features of the facility with current data
+    Y - [UX-Improvement]: Confirmation screen can show features of the facility with current data
 - Y [Required] FE Must provide fallback way to enter facility ID
 - Y [Required] FE is a PWA (e.g. can be installed to home page)
 - Y [Testing] A quick API route to generate QR codes for facilities
@@ -34,6 +33,10 @@
 
 # Potentials for improvenent/decisions
 
+- Better feedback and UX as user interacts with app
+  - More obvious loading states
+  - Maybe a toast saying "checking you in", "successful check in", etc
+  - Confirmation code checked by BE against issued codes before rendering confirmation page
 - Check in confirmation code could be set to anonymous or non-anonymous for staff to authenticate a check in
   - criteria to authenticate:
     - is code for current facility?
@@ -42,7 +45,7 @@
   - Say if you're within 1km of the facility you can check-in with the QR code.
     - QR code and manual codes can rotate daily on a screen
 - Error handling
-  - When log in fails
+  - When checking in fails
   - When user is not authorized to use facility
   - When facility code doesn't match a facility (maybe the facility is no longer with FP)
 - Should it work offline?

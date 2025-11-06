@@ -32,6 +32,9 @@ export async function checkUserIntoFacility(input: CheckInSchema) {
     };
   }
 
+  //   TODO: extra authorisation logic would go here
+  //   e.g. check if user has access to facility, log check-in to DB, etc
+
   const confirmationCode = await generateConfirmationCode();
   const newUrl = `/checkin/confirmation/${encodeURIComponent(
     facilityId

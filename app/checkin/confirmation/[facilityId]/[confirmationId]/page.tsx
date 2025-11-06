@@ -25,6 +25,9 @@ export default async function ConfirmationPage({
     return notFound();
   }
 
+  // TODO: extra authorisation logic would go here
+  //   e.g. check if confirmation code is valid for facility, etc
+
   return (
     <Flex direction="column" gap="4">
       <Flex justify="between" wrap="wrap">
