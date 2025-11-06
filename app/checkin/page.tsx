@@ -16,11 +16,18 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import NextLink from "next/link";
 
+import { checkUserIntoFacility } from "./checkUserIntoFacility";
+
 const VIDEO_FEED_DOM_ID = "fp-facilities-checkin-qr-code-video-feed";
 
 export default function CheckinPage() {
-  const { startCamera, decodedResult } = useQrCodeScanner();
+  const { startCamera, decodedQrCodeText } = useQrCodeScanner();
   const manualInputId = useId();
+
+  const [manualConfirmationCode, setManualConfirmationCode] =
+    useState<string>("");
+
+  const [checkingIn, setCheckingIn] = useState(false);
 
   return (
     <Flex direction="column" gap="4">
@@ -55,7 +62,12 @@ export default function CheckinPage() {
             <Text as="label" htmlFor={manualInputId} size="3">
               Enter facility code manually
             </Text>
-            <TextField.Root id={manualInputId} placeholder="e.g. facility-001">
+            <TextField.Root
+              id={manualInputId}
+              placeholder="e.g. facility-001"
+              value={manualConfirmationCode}
+              onChange={(e) => setManualConfirmationCode(e.currentTarget.value)}
+            >
               <TextField.Slot>
                 <Pencil1Icon />
               </TextField.Slot>
@@ -64,7 +76,25 @@ export default function CheckinPage() {
         </Flex>
       </Card>
 
-      <Text size="6">{decodedResult}</Text>
+      <Text size="6">QR Code text: {decodedQrCodeText}</Text>
+
+      <Button
+        loading={checkingIn}
+        disabled={checkingIn}
+        onClick={async () => {
+          const facilityId = manualConfirmationCode || decodedQrCodeText;
+          if (!facilityId) {
+            return;
+          }
+          setCheckingIn(true);
+          await checkUserIntoFacility({
+            userId: "user-123", // TODO: use real user ID
+            facilityId,
+          }).finally(() => setCheckingIn(false));
+        }}
+      >
+        Check in
+      </Button>
 
       <Box id={VIDEO_FEED_DOM_ID} width="80dvw" />
     </Flex>
@@ -72,7 +102,7 @@ export default function CheckinPage() {
 }
 
 const useQrCodeScanner = () => {
-  const [decodedResult, setDecodedResult] = useState<string | null>(null);
+  const [decodedQrCodeText, setDecodedResult] = useState<string | null>(null);
   const codeScannerRef = useRef<Html5QrcodeScanner>(null);
 
   useEffect(() => {
@@ -100,5 +130,5 @@ const useQrCodeScanner = () => {
     );
   }, []);
 
-  return { startCamera, decodedResult };
+  return { startCamera, decodedQrCodeText };
 };

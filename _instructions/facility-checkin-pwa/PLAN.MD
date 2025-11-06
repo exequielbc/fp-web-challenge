@@ -5,15 +5,15 @@
 
 # Functional requirements
 
-- [Required] FE User can scan QR code using their mobile
+- Y [Required] FE User can scan QR code using their mobile
 - [Required] BE Record that user checked in
 - [Required] BE validate that user has access to facility
 - [Required] FE Display feedback to user that they have been given access.
   - [Backlog]: Confirmation screen could show unique code for staff to double check (given by server, could or could not allow staff to know who the authorized user is)
   - [UX-Improvement]: Confirmation screen can show features of the facility with current data
-- [Required] FE Must provide fallback way to enter facility ID
-- [Required] FE is a PWA (e.g. can be installed to home page)
-- [Testing] A quick API route to generate QR codes for facilities
+- Y [Required] FE Must provide fallback way to enter facility ID
+- Y [Required] FE is a PWA (e.g. can be installed to home page)
+- Y [Testing] A quick API route to generate QR codes for facilities
   - generateStaticPaths => [facility IDs]
   - facilities/[facilityId]/code => QR Code
 - [Backlog] Show list of facilities near me (using Geolocation)
