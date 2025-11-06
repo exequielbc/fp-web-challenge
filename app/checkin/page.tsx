@@ -1,6 +1,6 @@
 "use client";
 
-import { CameraIcon, Cross1Icon } from "@radix-ui/react-icons";
+import { CameraIcon, Cross1Icon, Pencil1Icon } from "@radix-ui/react-icons";
 import {
   Box,
   Button,
@@ -9,15 +9,17 @@ import {
   Heading,
   IconButton,
   Text,
+  TextField,
   Tooltip,
 } from "@radix-ui/themes";
 import { Html5QrcodeScanner } from "html5-qrcode";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 
 const VIDEO_FEED_DOM_ID = "fp-facilities-checkin-qr-code-video-feed";
 
 export default function CheckinPage() {
   const { startCamera, decodedResult } = useQrCodeScanner();
+  const manualInputId = useId();
 
   return (
     <Flex direction="column" gap="4">
@@ -40,9 +42,22 @@ export default function CheckinPage() {
             </Text>
           </Flex>
 
-          <Button onClick={startCamera}>
-            <CameraIcon /> Start camera
-          </Button>
+          <Flex direction="column" gap="2">
+            <Button onClick={startCamera}>
+              <CameraIcon /> Start camera
+            </Button>
+            <Text size="4" color="gray" align="center">
+              or
+            </Text>
+            <Text as="label" htmlFor={manualInputId} size="3">
+              Enter facility code manually
+            </Text>
+            <TextField.Root id={manualInputId} placeholder="e.g. facility-001">
+              <TextField.Slot>
+                <Pencil1Icon />
+              </TextField.Slot>
+            </TextField.Root>
+          </Flex>
         </Flex>
       </Card>
 
