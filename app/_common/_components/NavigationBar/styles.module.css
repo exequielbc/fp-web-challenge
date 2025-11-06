@@ -1,0 +1,4 @@
+.navigationBarRoot {
+  background-color: var(--accent-5, blue);
+  border-radius: 0.5rem 0.5rem 0 0;
+}

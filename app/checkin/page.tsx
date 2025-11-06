@@ -14,6 +14,7 @@ import {
 } from "@radix-ui/themes";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
+import NextLink from "next/link";
 
 const VIDEO_FEED_DOM_ID = "fp-facilities-checkin-qr-code-video-feed";
 
@@ -26,9 +27,11 @@ export default function CheckinPage() {
       <Flex justify="between" wrap="wrap">
         <Heading size="6">Check in to a facility</Heading>
         <Tooltip content="Go home">
-          <IconButton aria-label="Go home" radius="full" variant="soft">
-            <Cross1Icon />
-          </IconButton>
+          <NextLink href="/" aria-label="Go home">
+            <IconButton radius="full" variant="soft">
+              <Cross1Icon />
+            </IconButton>
+          </NextLink>
         </Tooltip>
       </Flex>
 

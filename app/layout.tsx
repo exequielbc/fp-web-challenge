@@ -6,6 +6,7 @@ import { ToastProvider, ToastViewport } from "@radix-ui/react-toast";
 import { ThemeProvider } from "next-themes";
 import styles from "./layout.module.css";
 import "@radix-ui/themes/styles.css";
+import { NavigationBar } from "./_common/_components/NavigationBar";
 
 export const metadata: Metadata = {
   title: "FP facilities check in",
@@ -30,8 +31,8 @@ export default function RootLayout({
         <ThemeProvider attribute="class">
           <Theme accentColor="blue">
             <ToastProvider>
-              <Container p="2">
-                {/* <NavigationBar mb="2" /> */}
+              <Container p="2" className={styles.container}>
+                <NavigationBar />
                 <ScrollArea scrollbars="vertical">{children}</ScrollArea>
               </Container>
               <Container className={styles.toastViewport} p="4">
